@@ -16,8 +16,8 @@ layout: manpage_v2
 <div class="sectionbody">
 <div class="listingblock">
 <div class="content">
-<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include</span> <span class="tok-cpf">&lt;nng/nng.h&gt;</span><span class="tok-cp">
-</span><span class="tok-cp"></span>
+<pre class="pygments highlight"><code data-lang="c"><span class="tok-cp">#include</span> <span class="tok-cpf">&lt;nng/nng.h&gt;</span>
+
 <span class="tok-kt">int</span> <span class="tok-nf">nng_aio_set_iov</span><span class="tok-p">(</span><span class="tok-n">nng_aio</span> <span class="tok-o">*</span><span class="tok-n">aio</span><span class="tok-p">,</span> <span class="tok-kt">unsigned</span> <span class="tok-kt">int</span> <span class="tok-n">niov</span><span class="tok-p">,</span> <span class="tok-n">nng_iov</span> <span class="tok-o">*</span><span class="tok-n">iov</span><span class="tok-p">);</span></code></pre>
 </div>
 </div>
@@ -46,7 +46,7 @@ structures, which have the following definition:</p>
 The values pointed to by the <code>iov_buf</code> members are <strong>not</strong> copied by this function though.</p>
 </div>
 <div class="paragraph">
-<p>A maximum of eight (8) <code>nng_iov</code> members may be supplied.</p>
+<p>A maximum of four (4) <code>nng_iov</code> members may be supplied.</p>
 </div>
 <div class="admonitionblock note">
 <table>
