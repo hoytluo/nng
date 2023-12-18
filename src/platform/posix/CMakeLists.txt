@@ -75,6 +75,7 @@ if (NNG_PLATFORM_POSIX)
             posix_clock.c
             posix_debug.c
             posix_file.c
+            posix_fdconn.c
             posix_ipcconn.c
             posix_ipcdial.c
             posix_ipclisten.c
