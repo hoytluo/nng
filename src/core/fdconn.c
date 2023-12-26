@@ -83,12 +83,13 @@ fdc_start_conn(fdc_listener *l, nni_aio *aio)
 		l->listen_q[i] = l->listen_q[i + 1];
 	}
 	l->listen_cnt--;
-	if ((rv = nni_fdc_conn_alloc(&c, fd)) == 0) {
+	if ((rv = nni_fdc_conn_alloc(&c, fd)) != 0) {
 		nni_aio_finish_error(aio, rv);
 		nni_fdc_close_fd(fd);
+	} else {
+		nni_aio_set_output(aio, 0, c);
+		nni_aio_finish(aio, 0, 0);
 	}
-	nni_aio_set_output(aio, 0, c);
-	nni_aio_finish(aio, 0, 0);
 }
 
 static void

@@ -10,7 +10,6 @@
 # File Descriptor (or Handle) based connections
 nng_directory(fdconn)
 
-nng_sources(fdconn.c)
-# nng_headers_if(NNG_TRANSPORT_FDCONN nng/transport/fdconn/fdconn.h)
-nng_defines(NNG_TRANSPORT_FDCONN)
+nng_sources_if(NNG_TRANSPORT_FDC fdconn.c)
+nng_defines_if(NNG_TRANSPORT_FDC NNG_TRANSPORT_FDC)
 nng_test(fdc_test)

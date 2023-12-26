@@ -15,6 +15,7 @@
 #include <poll.h>
 #include <stdbool.h>
 #include <sys/uio.h>
+#include <unistd.h>
 
 #include "core/fdconn.h"
 #include "platform/posix/posix_aio.h"
@@ -379,4 +380,10 @@ nni_fdc_conn_alloc(nni_fdc_conn **cp, int fd)
 
 	*cp = c;
 	return (0);
+}
+
+void
+nni_fdc_close_fd(int fd)
+{
+	close(fd);
 }

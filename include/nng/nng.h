@@ -709,8 +709,8 @@ NNG_DECL nng_listener nng_pipe_listener(nng_pipe);
 
 // TLS options are only used when the underlying transport supports TLS.
 
-// NNG_OPT_TLS_CONFIG is a pointer to an nng_tls_config object.  Generally
-// this can used with endpoints, although once an endpoint is started, or
+// NNG_OPT_TLS_CONFIG is a pointer to a nng_tls_config object.  Generally
+// this can be used with endpoints, although once an endpoint is started, or
 // once a configuration is used, the value becomes read-only. Note that
 // when configuring the object, a hold is placed on the TLS configuration,
 // using a reference count.  When retrieving the object, no such hold is
@@ -730,7 +730,7 @@ NNG_DECL nng_listener nng_pipe_listener(nng_pipe);
 
 // NNG_OPT_TLS_CERT_KEY_FILE names a single file that contains a certificate
 // and key identifying the endpoint.  This is a write-only value.  This can be
-// set multiple times for times for different keys/certs corresponding to
+// set multiple times for different keys/certs corresponding to
 // different algorithms on listeners, whereas dialers only support one.  The
 // file must contain both cert and key as PEM blocks, and the key must
 // not be encrypted.  (If more flexibility is needed, use the TLS configuration
@@ -750,13 +750,13 @@ NNG_DECL nng_listener nng_pipe_listener(nng_pipe);
 #define NNG_OPT_TLS_SERVER_NAME "tls-server-name"
 
 // NNG_OPT_TLS_VERIFIED returns a boolean indicating whether the peer has
-// been verified (true) or not (false). Typically this is read-only, and
+// been verified (true) or not (false). Typically, this is read-only, and
 // only available for pipes. This option may return incorrect results if
 // peer authentication is disabled with `NNG_TLS_AUTH_MODE_NONE`.
 #define NNG_OPT_TLS_VERIFIED "tls-verified"
 
 // NNG_OPT_TLS_PEER_CN returns the string with the common name
-// of the peer certificate. Typically this is read-only and
+// of the peer certificate. Typically, this is read-only and
 // only available for pipes. This option may return incorrect results if
 // peer authentication is disabled with `NNG_TLS_AUTH_MODE_NONE`.
 #define NNG_OPT_TLS_PEER_CN "tls-peer-cn"
@@ -892,6 +892,16 @@ NNG_DECL nng_listener nng_pipe_listener(nng_pipe);
 // should not be used unless required to communication with 3rd party
 // peers that cannot be coerced into sending binary frames.
 #define NNG_OPT_WS_RECV_TEXT "ws:recv-text"
+
+// NNG_OPT_FDC_FD is a write-only integer property that is used to
+// file descriptors (or FILE HANDLE objects on Windows) to a
+// fdconn:// based listener.  This file descriptor will be taken
+// over and used as a stream connection.  The protocol is compatible
+// with SP over TCP.  This facility is experimental, and intended to
+// allow use with descriptors created via socketpair() or similar.
+// Note that unidirectional pipes (such as those from pipe(2) or mkfifo)
+// are not supported.
+#define NNG_OPT_FDC_FD "fdc:fd"
 
 // XXX: TBD: priorities, ipv4only
 
