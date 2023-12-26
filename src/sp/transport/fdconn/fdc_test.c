@@ -24,27 +24,6 @@ test_fdc_connect_fail(void)
 }
 
 void
-test_tcp_local_address_connect(void)
-{
-
-	nng_socket s1;
-	nng_socket s2;
-	char       addr[NNG_MAXADDRLEN];
-	uint16_t   port;
-
-	NUTS_OPEN(s1);
-	NUTS_OPEN(s2);
-	port = nuts_next_port();
-	(void) snprintf(addr, sizeof(addr), "tcp://127.0.0.1:%u", port);
-	NUTS_PASS(nng_listen(s1, addr, NULL, 0));
-	(void) snprintf(
-	    addr, sizeof(addr), "tcp://127.0.0.1;127.0.0.1:%u", port);
-	NUTS_PASS(nng_dial(s2, addr, NULL, 0));
-	NUTS_CLOSE(s2);
-	NUTS_CLOSE(s1);
-}
-
-void
 test_fdc_malformed_address(void)
 {
 	nng_socket s1;
@@ -64,7 +43,6 @@ test_fdc_listen(void)
 	NUTS_CLOSE(s1);
 }
 
-#include <sys/socket.h>
 void
 test_fdc_accept(void)
 {
@@ -72,7 +50,7 @@ test_fdc_accept(void)
 	nng_listener l;
 	int fds[2];
 
-	NUTS_PASS(socketpair(PF_UNIX, SOCK_STREAM, 0, fds));
+	NUTS_PASS(nng_socket_pair(fds));
 	// make sure we won't have to deal with SIGPIPE - EPIPE is better
 	signal(SIGPIPE, SIG_IGN);
 	NUTS_OPEN(s1);
@@ -93,7 +71,7 @@ test_fdc_exchange(void)
 	nng_listener l1, l2;
 	int fds[2];
 
-	NUTS_PASS(socketpair(PF_UNIX, SOCK_STREAM, 0, fds));
+	NUTS_PASS(nng_socket_pair(fds));
 	// make sure we won't have to deal with SIGPIPE - EPIPE is better
 	signal(SIGPIPE, SIG_IGN);
 	NUTS_OPEN(s1);
@@ -127,7 +105,7 @@ test_fdc_recv_max(void)
 	size_t       sz;
 	int fds[2];
 
-	NUTS_PASS(socketpair(PF_UNIX, SOCK_STREAM, 0, fds));
+	NUTS_PASS(nng_socket_pair(fds));
 
 	NUTS_OPEN(s0);
 	NUTS_PASS(nng_socket_set_ms(s0, NNG_OPT_RECVTIMEO, 100));
@@ -157,11 +135,12 @@ NUTS_TESTS = {
 
 	{ "fdc connect fail", test_fdc_connect_fail },
 	{ "fdc malformed address", test_fdc_malformed_address },
+#ifdef NNG_HAVE_SOCKETPAIR
 	{ "fdc listen", test_fdc_listen },
 	{ "fdc accept", test_fdc_accept },
 	{ "fdc exchange", test_fdc_exchange },
 	{ "fdc recv max", test_fdc_recv_max },
+#endif
 
-	// { "fdc recv max", test_tcp_recv_max },
 	{ NULL, NULL },
 };
