@@ -52,7 +52,6 @@ test_fdc_accept(void)
 
 	NUTS_PASS(nng_socket_pair(fds));
 	// make sure we won't have to deal with SIGPIPE - EPIPE is better
-	signal(SIGPIPE, SIG_IGN);
 	NUTS_OPEN(s1);
 	NUTS_OPEN(s2);
 	NUTS_PASS(nng_listener_create(&l, s1, "fdconn://"));
@@ -72,8 +71,6 @@ test_fdc_exchange(void)
 	int fds[2];
 
 	NUTS_PASS(nng_socket_pair(fds));
-	// make sure we won't have to deal with SIGPIPE - EPIPE is better
-	signal(SIGPIPE, SIG_IGN);
 	NUTS_OPEN(s1);
 	NUTS_OPEN(s2);
 	NUTS_PASS(nng_listener_create(&l1, s1, "fdconn://"));
@@ -104,6 +101,7 @@ test_fdc_recv_max(void)
 	nng_listener l1;
 	size_t       sz;
 	int fds[2];
+
 
 	NUTS_PASS(nng_socket_pair(fds));
 

@@ -26,6 +26,12 @@ nni_socket_pair(int *fds)
 		return (nni_plat_errno(errno));
 	}
 
+#ifdef SO_NOSIGPIPE
+	int set = 1;
+	setsockopt(fds[0], SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
+	setsockopt(fds[1], SOL_SOCKET, SO_NOSIGPIPE, (void *)&set, sizeof(int));
+#endif
+
 	return (0);
 }
 #else
