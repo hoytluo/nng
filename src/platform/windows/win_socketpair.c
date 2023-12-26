@@ -32,6 +32,26 @@ nni_socket_pair(int *fds)
 int
 nni_socket_pair(int *fds)
 {
+	NNI_ARG_UNUSED(fds);
 	return (NNG_ENOTSUP);
 }
+
+// This is also the fdc transport.
+
+typedef struct nni_fdc_conn {} nni_fdc_conn;
+
+void
+nni_fdc_close_fd(int fd)
+{
+	NNI_ARG_UNUSED(fd);
+}
+
+int
+nni_fdc_conn_alloc(nni_fdc_conn **cp, int fd)
+{
+	NNI_ARG_UNUSED(cp);
+	NNI_ARG_UNUSED(fd);
+	return (NNG_ENOTSUP);
+}
+
 #endif
